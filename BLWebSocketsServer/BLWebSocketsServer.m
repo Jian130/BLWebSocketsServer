@@ -200,6 +200,9 @@ static int callback_websockets(struct libwebsocket_context * this,
             break;
         }
         case LWS_CALLBACK_CLOSED: {
+            if (sharedInstance.handleRequestBlock) {
+                sharedInstance.handleRequestBlock(nil, [NSString stringWithFormat:@"%d", *session_id]);
+            }
             [sharedInstance.asyncMessageQueue removeMessageQueueForUserWithId:*session_id];
             break;
         }
